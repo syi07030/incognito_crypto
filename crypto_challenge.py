@@ -17,10 +17,11 @@ class XOR:
 
 class AES256:
     def __init__(self, key):
-        self.key = hashlib.sha256(key).digest
+        #self.key = hashlib.sha256(key).digest
         iv = chr(0)*16
+        #self.key = chr(1)*32
         #bs = AES.block_size
-        self.crypto = AES.new(self.key, AES.MODE_CBC, iv)
+        self.crypto = AES.new(key, AES.MODE_CBC, iv)
     def encrypt(self, msg):
         msg = msg + "0"*(32-len(msg))
         #msg.ljust(32,0)
@@ -38,8 +39,11 @@ def main():
     xor = XOR()
     xore_flag = xor.encrypt(flag)
     print(type(xore_flag))
-    aes = AES256("key".encode)
+    aes = AES256([0x10,0x01]*16)
     encrypt_flag = aes.encrypt(xore_flag)
+    #fw = open('output.txt', 'w')
+    #fw.write("encrypt flag: ", encrypt_flag)
+    #fw.close()
     print("encrypt flag: ", encrypt_flag)
     xord_flag = xor.decrypt()
     decrypt_flag = aes.decrypt(xord_flag)
