@@ -16,42 +16,39 @@ class XOR:
         return self.encrypt(data)
 
 class AES256:
-    def __init__(self, key):
+    def __init__(self):
         #self.key = hashlib.sha256(key).digest
-        iv = chr(0)*16
-        #self.key = chr(1)*32
-        #bs = AES.block_size
-        self.crypto = AES.new(key, AES.MODE_CBC, iv)
+        iv = b'\x00'*16
+        self.key = b'12345678901234567890123456789012'
+        self.crypto = AES.new(self.key, AES.MODE_CBC, iv)
     def encrypt(self, msg):
-        msg = msg + "0"*(32-len(msg))
+        msg = msg + b'\x00'*(32-len(msg))
         #msg.ljust(32,0)
         cipher = self.crypto.encrypt(msg)
         return cipher
     def decrypt(self, enc):
-        enc = enc[:184]
         msg = self.crypto.decrypt(enc)
-        return msg
+        return msg[:23]
 
 def main():
     #flag = open('flag.txt', 'r').read().strip().encode()
     flag = binascii.unhexlify("494e434f7b643363727970745f7375636365357321217d")
     print(len(flag)) #23-byte
-    xor = XOR()
-    xore_flag = xor.encrypt(flag)
+    xore = XOR()
+    xore_flag = xore.encrypt(flag)
     print(type(xore_flag))
-    aes = AES256([0x10,0x01]*16)
-    encrypt_flag = aes.encrypt(xore_flag)
+    aese = AES256()
+    encrypt_flag = aese.encrypt(xore_flag)
     #fw = open('output.txt', 'w')
     #fw.write("encrypt flag: ", encrypt_flag)
     #fw.close()
-    print("encrypt flag: ", encrypt_flag)
-    xord_flag = xor.decrypt()
-    decrypt_flag = aes.decrypt(xord_flag)
-    print ('decrypt flag:', xor.decrypt(decrypt_flag))
+    print(">>>>>encrypt flag: ", encrypt_flag)
+
+    xord = XOR()
+    aesd = AES256()
+    decrypt_flag = aesd.decrypt(encrypt_flag)
+    xord_flag = xord.decrypt(decrypt_flag)
+    print ('>>>>>decrypt flag:', xord_flag)
 
 if __name__ == '__main__':
     main()
-
-#따로 텍스트 주지 말고 실행했을 때 나오는 output -> 텍스트 파일로 저장
-#문제는 플래그 값 암호화된 거를 어떻게 저장할지
-#padding?
