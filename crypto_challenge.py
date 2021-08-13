@@ -4,7 +4,7 @@ from Crypto.Cipher import AES
 
 class XOR:
     def __init__(self):
-        self.key = os.urandom(5)
+        self.key = os.urandom(5) #find key value
     def encrypt(self, data: bytes) -> bytes:
         enc = b''
         for i in range(len(data)):
