@@ -31,14 +31,16 @@ class AES256:
         return msg[:23]
 
 def main():
-    #flag = open('flag.txt', 'r').read().strip().encode()
+    pwd = os.getcwd()
+    #flag = open(pwd+'/desktop/hgy/INCOGNITO/ctf/flag.txt', 'r').read().strip()
+    #print(flag)
     flag = binascii.unhexlify("494e434f7b643363727970745f7375636365357321217d")
     print(len(flag)) #23-byte
     xore = XOR()
     xore_flag = xore.encrypt(flag)
-    print(type(xore_flag))
     aese = AES256()
     encrypt_flag = aese.encrypt(xore_flag)
+    
     #fw = open('output.txt', 'w')
     #fw.write("encrypt flag: ", encrypt_flag)
     #fw.close()
@@ -47,8 +49,14 @@ def main():
     xord = XOR()
     aesd = AES256()
     decrypt_flag = aesd.decrypt(encrypt_flag)
+    print("only aes decrypt: ", decrypt_flag)
+    print(binascii.b2a_hex(decrypt_flag))
     xord_flag = xord.decrypt(decrypt_flag)
     print ('>>>>>decrypt flag:', xord_flag)
 
 if __name__ == '__main__':
     main()
+
+    #encrypt flag값을 아예 텍스트 파일로 저장해서 문제랑 함께 주고 -> 아니면 그냥 코드에 박아버리기
+    #사람들이 decrypt 부분 함수를 채워서 그 파일을 열어서 복호화를 성공적으로 하면 플래그 값 획득
+    #aes 키 값은 그냥 코드에서 주는 거 확정, xor같은 경우도 그냥 키 값 주어지는 건 어떨지
