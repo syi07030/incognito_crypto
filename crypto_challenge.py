@@ -34,6 +34,7 @@ class AES256:
 
 def main():
     pwd = os.getcwd()
+<<<<<<< HEAD
     flag = open(pwd+'/desktop/hgy/INCOGNITO/ctf/flag.bin', 'rb').read().strip()
     #print(flag)
     #flag = binascii.unhexlify("494e434f7b643363727970745f7375636365357321217d")
@@ -43,6 +44,23 @@ def main():
     #aese = AES256()
     #encrypt_flag = aese.encrypt(xore_flag)
     
+=======
+    print(pwd)
+##########################
+    #file = open("sample.bin", "wb")
+    #file.write(b"\x88\xae\x97B\x94\xcf\x95\xe8\x98\x8bS\xf8\xf1\xb3\xcajl\xb9\xe7\xba\xda\xc57 AP\x18z\xf5E\xda1")
+    #file.close 
+############################
+    flag = open(pwd+'\Desktop\incognito_crypto\sample.bin', 'rb').read().strip()
+    print(flag)
+    '''#flag = binascii.unhexlify("494e434f7b643363727970745f7375636365357321217d")
+    print(len(flag)) #23-byte
+    xore = XOR()
+    xore_flag = xore.encrypt(flag)
+    aese = AES256()
+    encrypt_flag = aese.encrypt(xore_flag)'''
+
+>>>>>>> c32966d018ae70b5a7e607716f832c24b1360a39
     #fw = open('output.txt', 'w')
     #fw.write("encrypt flag: ", encrypt_flag)
     #fw.close()
@@ -51,8 +69,13 @@ def main():
     xord = XOR()
     aesd = AES256()
     decrypt_flag = aesd.decrypt(flag)
+<<<<<<< HEAD
     #print("only aes decrypt: ", decrypt_flag)
     print("only aes decrypt: ", binascii.b2a_hex(decrypt_flag))
+=======
+    print("only aes decrypt: ", decrypt_flag)
+    print(binascii.b2a_hex(decrypt_flag))
+>>>>>>> c32966d018ae70b5a7e607716f832c24b1360a39
     xord_flag = xord.decrypt(decrypt_flag)
     print ('>>>>>decrypt flag:', xord_flag)
 
